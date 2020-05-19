@@ -13,12 +13,13 @@ import (
 const (
 	defaultRegion = "eu-central-1"
 	defaultUser   = "dev-user"
-	// uploader
+	// uploader & downloader
 	defaultPartSize = 128 * 1024 * 1024 // 32 MB (32 * 1024 * 1024) bytes
 )
 
 var client *s3.S3
 var uploader *s3manager.Uploader
+var downloader *s3manager.Downloader
 var sess *session.Session
 
 func init() {
@@ -48,4 +49,14 @@ func GetUploader() *s3manager.Uploader {
 		})
 	}
 	return uploader
+}
+
+// GetDownloader returns s3manager aws downloader
+func GetDownloader() *s3manager.Downloader {
+	if downloader == nil {
+		downloader = s3manager.NewDownloader(sess, func(d *s3manager.Downloader) {
+			d.PartSize = defaultPartSize
+		})
+	}
+	return downloader
 }

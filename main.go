@@ -11,11 +11,12 @@ import (
 )
 
 const (
-	CreateBucketCommand     = "create"
-	ListBucketsCommand      = "buckets"
-	BucketCommand           = "bucket"
-	BucketUploadItemCommand = "upload"
-	BucketRemoveItemCommand = "remove"
+	CreateBucketCommand       = "create"
+	ListBucketsCommand        = "buckets"
+	BucketCommand             = "bucket"
+	BucketUploadItemCommand   = "upload"
+	BucketDownloadItemCommand = "download"
+	BucketRemoveItemCommand   = "remove"
 )
 
 func main() {
@@ -61,10 +62,12 @@ func main() {
 			os.Exit(1)
 		}
 
+		arg := os.Args[4]
 		switch subcmd {
 		case BucketUploadItemCommand:
-			filepath := os.Args[4]
-			s3client.UploadToBucket(bucket, filepath)
+			s3client.UploadToBucket(bucket, arg)
+		case BucketDownloadItemCommand:
+			s3client.DownloadFromBucket(bucket, arg)
 		case BucketRemoveItemCommand:
 		}
 

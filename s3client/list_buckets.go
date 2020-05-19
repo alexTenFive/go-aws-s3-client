@@ -12,7 +12,6 @@ func ListBuckets() []*s3.Bucket {
 	result, err := svc.ListBuckets(nil)
 	if err != nil {
 		helpers.ExitErrorf("error when retrieving buckets list: %v", err)
-		return nil
 	}
 
 	return result.Buckets

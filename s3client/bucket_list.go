@@ -12,7 +12,6 @@ func BucketList(bucket string) []*s3.Object {
 	resp, err := svc.ListObjectsV2(&s3.ListObjectsV2Input{Bucket: aws.String(bucket)})
 	if err != nil {
 		helpers.ExitErrorf("Unable to list items in bucket %q, %v", bucket, err)
-		return nil
 	}
 	return resp.Contents
 }

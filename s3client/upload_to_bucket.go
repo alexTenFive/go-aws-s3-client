@@ -19,7 +19,6 @@ func UploadToBucket(bucket, filename string) {
 	if err != nil {
 		// Print the error and exit.
 		helpers.ExitErrorf("Unable to open file %q: %v", filename, err)
-		return
 	}
 	defer file.Close()
 
@@ -29,20 +28,17 @@ func UploadToBucket(bucket, filename string) {
 		tarFile, err := os.Create(tarFileName)
 		if err != nil {
 			helpers.ExitErrorf("Cannot create temp archive %q: %v", tarFileName, err)
-			return
 		}
 		defer os.Remove(tarFileName) // remove archive after upload to s3
 
 		if err = helpers.Tar(filename, tarFile); err != nil {
 			helpers.ExitErrorf("Cannot tar archive %q: %v", tarFileName, err)
-			return
 		}
 		tarFile.Close() // confirm write to it
 
 		tarFile, err = os.Open(tarFileName) // open for upload to s3
 		if err != nil {
-			helpers.ExitErrorf("Cannot open archive %q\n", tarFileName)
-			return
+			helpers.ExitErrorf("Cannot open archive %q: %err\n", tarFileName)
 		}
 		defer tarFile.Close()
 
@@ -56,8 +52,6 @@ func UploadToBucket(bucket, filename string) {
 	if err != nil {
 		helpers.ExitErrorf("Unable to upload %q to %q, %v", filename, bucket, err)
 	}
-	return
-
 }
 
 func upload(bucket string, file *os.File, filename string) error {
