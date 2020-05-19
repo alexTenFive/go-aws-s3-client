@@ -1,7 +1,7 @@
 package s3client
 
 import (
-	"github.com/alexTenFive/s3-client/helpers"
+	"github.com/alexTenFive/go-aws-s3-client/helpers"
 	"github.com/aws/aws-sdk-go/service/s3"
 )
 

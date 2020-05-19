@@ -6,8 +6,8 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws"
 
-	"github.com/alexTenFive/s3-client/helpers"
-	"github.com/alexTenFive/s3-client/s3client"
+	"github.com/alexTenFive/go-aws-s3-client/helpers"
+	"github.com/alexTenFive/go-aws-s3-client/s3client"
 )
 
 const (
