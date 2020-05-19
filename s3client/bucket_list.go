@@ -8,8 +8,7 @@ import (
 
 // BucketList return bucket list items
 func BucketList(bucket string) []*s3.Object {
-	svc := GetClient()
-	resp, err := svc.ListObjectsV2(&s3.ListObjectsV2Input{Bucket: aws.String(bucket)})
+	resp, err := GetClient().ListObjectsV2(&s3.ListObjectsV2Input{Bucket: aws.String(bucket)})
 	if err != nil {
 		helpers.ExitErrorf("Unable to list items in bucket %q, %v", bucket, err)
 	}

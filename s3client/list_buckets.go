@@ -7,9 +7,7 @@ import (
 
 // ListBuckets s
 func ListBuckets() []*s3.Bucket {
-	svc := GetClient()
-
-	result, err := svc.ListBuckets(nil)
+	result, err := GetClient().ListBuckets(nil)
 	if err != nil {
 		helpers.ExitErrorf("error when retrieving buckets list: %v", err)
 	}

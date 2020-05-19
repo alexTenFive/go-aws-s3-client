@@ -10,9 +10,7 @@ import (
 
 // CreateBucket creates s3 bucket
 func CreateBucket(bucket string) {
-	svc := GetClient()
-
-	_, err := svc.CreateBucket(&s3.CreateBucketInput{
+	_, err := GetClient().CreateBucket(&s3.CreateBucketInput{
 		Bucket: aws.String(bucket),
 	})
 	if err != nil {
@@ -22,7 +20,7 @@ func CreateBucket(bucket string) {
 	// Wait until bucket is created before finishing
 	fmt.Printf("Waiting for bucket %q to be created...\n", bucket)
 
-	err = svc.WaitUntilBucketExists(&s3.HeadBucketInput{
+	err = GetClient().WaitUntilBucketExists(&s3.HeadBucketInput{
 		Bucket: aws.String(bucket),
 	})
 
