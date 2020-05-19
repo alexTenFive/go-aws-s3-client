@@ -1,0 +1,34 @@
+package s3client
+
+import (
+	"fmt"
+
+	"github.com/alexTenFive/s3-client/helpers"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/service/s3"
+)
+
+// CreateBucket creates s3 bucket
+func CreateBucket(bucket string) {
+	svc := GetClient()
+
+	_, err := svc.CreateBucket(&s3.CreateBucketInput{
+		Bucket: aws.String(bucket),
+	})
+	if err != nil {
+		helpers.ExitErrorf("Unable to create bucket %q, %v", bucket, err)
+	}
+
+	// Wait until bucket is created before finishing
+	fmt.Printf("Waiting for bucket %q to be created...\n", bucket)
+
+	err = svc.WaitUntilBucketExists(&s3.HeadBucketInput{
+		Bucket: aws.String(bucket),
+	})
+
+	if err != nil {
+		helpers.ExitErrorf("Error occurred while waiting for bucket to be created, %v", bucket)
+	}
+
+	fmt.Printf("Bucket %q successfully created\n", bucket)
+}
